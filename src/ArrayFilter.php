@@ -26,8 +26,8 @@ class ArrayFilter
 
     private function matchSpecifiedKeys($keys, $source, $filter, $options) {
         foreach ($keys as $key) {
-            $sourceValue = array_key_exists($key, $source) ? $source[$key] : null;
-            $filterValue = array_key_exists($key, $filter) ? $filter[$key] : null;
+            $sourceValue = @$source[$key];
+            $filterValue = @$filter[$key];
 
             if ($this->isNotMeta($key) && !$this->checkFilter($sourceValue, $filterValue, $options)) {
                 return false;
