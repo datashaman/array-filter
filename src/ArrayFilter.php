@@ -78,10 +78,10 @@ class ArrayFilter
                 $this->log->debug('Filter is $any', get_defined_vars());
                 return true;
             } elseif (!empty($filter['$query']) && !empty($options['queryHandler'])) {
-                $this->log->debug('Filter is $query', get_defined_vars());
                 $queryHandler = $options['queryHandler'];
                 $context = array_key_exists('context', $options) ? $options['context'] : $source;
                 $queryValue = $queryHandler($filter['$query'], $context);
+                $this->log->debug('Filter is $query', get_defined_vars());
                 return $source == $queryValue;
             }
         } else {
