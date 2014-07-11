@@ -324,6 +324,8 @@ class ArrayFilterTest extends PHPUnit_Framework_TestCase
     public function testFilterQueries()
     {
         $queryHandler = function($query, $object) {
+            var_dump(get_defined_vars());
+
             if ($query === 'user_id') {
                 return 124;
             }
