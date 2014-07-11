@@ -72,7 +72,7 @@ class ArrayFilter
             } elseif (is_null($filter)) {
                 $this->log->debug('Filter is null', get_defined_vars());
                 return true;
-            } elseif (!empty($filter['$any'])) {
+            } elseif (!empty($filter['$any']) && $filter['$any'] === true) {
                 $this->log->debug('First');
                 $this->log->debug('Filter is $any', get_defined_vars());
                 return true;
@@ -96,7 +96,7 @@ class ArrayFilter
 
         if ($this->isObject($source)) {
             if ($this->isObject($filter)) {
-                if (!empty($filter['$any']) && $checkConditionals) {
+                if (!empty($filter['$any']) && $filter['$any'] === true && $checkConditionals) {
                     $this->log->debug('Second');
                     $this->log->debug('Filter is $any', get_defined_vars());
                     return true;
