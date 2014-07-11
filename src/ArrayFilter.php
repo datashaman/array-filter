@@ -1,7 +1,22 @@
 <?php namespace DataShaman;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 class ArrayFilter
 {
+    private $log;
+
+    public function __construct($log=null)
+    {
+        if (is_null($log)) {
+            $log = new Logger('datashaman.array-filter');
+            $log->pushHandler(new StreamHandler('php://stdout'), Logger::DEBUG);
+        }
+
+        $this->log = $log;
+    }
+
     public function isAssocArray($thing) {
         if (is_array($thing)) {
             $keys = array_keys($thing);
@@ -44,26 +59,36 @@ class ArrayFilter
         ), $options);
 
         if ($checkConditionals) {
+            $this->log->debug('Check conditionals', get_defined_vars());
             if ($filter && is_array($filter) && array_key_exists('$present', $filter) && $filter['$present']) {
+                $this->log->debug('Filter is $present', get_defined_vars());
                 return !empty($source);
             } elseif ($filter && is_array($filter) && array_key_exists('$present', $filter) && $filter['$present'] === false) {
+                $this->log->debug('Filter is not $present', get_defined_vars());
                 return empty($source);
             } elseif (!isset($filter)) {
+                $this->log->debug('Filter is undefined', get_defined_vars());
                 return 'undefined';
             } elseif (is_null($filter)) {
+                $this->log->debug('Filter is null', get_defined_vars());
                 return true;
             } elseif (!empty($filter['$any'])) {
+                $this->log->debug('Filter is $any', get_defined_vars());
                 return true;
             } elseif (!empty($filter['$query']) && !empty($options['queryHandler'])) {
+                $this->log->debug('Filter is $query', get_defined_vars());
                 $queryHandler = $options['queryHandler'];
                 $context = array_key_exists('context', $options) ? $options['context'] : $source;
                 $queryValue = $queryHandler($filter['$query'], $context);
                 return $source == $queryValue;
             }
         } else {
+            $this->log->debug('No check conditionals', get_defined_vars());
             if ($source === $filter) {
+                $this->log->debug('Source is filter, return true', get_defined_vars());
                 return true;
-            } elseif ($filter == null) {
+            } elseif (is_null($filter)) {
+                $this->log->debug('Filter is null, return false', get_defined_vars());
                 return false;
             }
         }
@@ -73,7 +98,10 @@ class ArrayFilter
                 if (!empty($filter['$any']) && $checkConditionals) {
                     return true;
                 } elseif ($this->isNumericArray($source)) {
+                    $this->log->debug('Source is an array', get_defined_vars());
+
                     if (array_key_exists('$contains', $filter) && $this->isNumericArray($filter['$contains']) && $checkConditionals) {
+                        $this->log->debug('Filter is $contains', get_defined_vars());
                         foreach ($filter['$contains'] as $value) {
                             if (array_search($value, $source) === false) {
                                 return false;
@@ -81,6 +109,7 @@ class ArrayFilter
                         }
                         return true;
                     } elseif (array_key_exists('$excludes', $filter) && $this->isNumericArray($filter['$excludes']) && $checkConditionals) {
+                        $this->log->debug('Filter is $excludes', get_defined_vars());
                         foreach ($filter['$excludes'] as $value) {
                             if (array_search($value, $source) !== false) {
                                 return false;
@@ -88,24 +117,28 @@ class ArrayFilter
                         }
                         return true;
                     } elseif ($this->isNumericArray($filter)) {
+                        $this->log->debug('Filter is numeric array', get_defined_vars());
                         return $this->matchKeys($source, $filter, $options) && (count($filter) == count($source));
                     } else {
+                        $this->log->debug('Filter match keys', get_defined_vars());
                         return $this->matchKeys($source, $filter, $options);
                     }
                 } else {
+                    $this->log->debug('Filter match keys', get_defined_vars());
                     return $this->matchKeys($source, $filter, $options);
                 }
             }
         } else {
             if (!empty($filter['$only']) && $this->isNumericArray($filter['$only']) && $checkConditionals) {
+                $this->log->debug('Filter is $only', get_defined_vars());
                 $key = array_search($source, $filter['$only']);
                 return !($key === false);
             } elseif (!empty($filter['$not']) && $this->isNumericArray($filter['$not']) && $checkConditionals) {
+                $this->log->debug('Filter is $not', get_defined_vars());
                 $key = array_search($source, $filter['$not']);
                 return ($key === false);
             } else {
-                var_dump(get_defined_vars());
-
+                $this->log->debug('Source is filter', get_defined_vars());
                 return $source === $filter;
             }
         }
