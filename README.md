@@ -1,5 +1,5 @@
 Array Filter
-===
+======
 
 A literal port of the excellent Javascript library [ mmckegg / json-filter ](https://github.com/mmckegg/json-filter) to PHP.
 
