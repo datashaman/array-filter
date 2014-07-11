@@ -52,7 +52,7 @@ class ArrayFilter
     }
 
     public function checkFilter($source, $filter, $options=array()) {
-        $checkConditionals = empty($options) || @$options['match'] !== 'all';
+        $checkConditionals = empty($options) || empty($options['match']) || $options['match'] !== 'all';
 
         $options = array_merge(array(
             'match' => 'filter',
