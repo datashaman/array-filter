@@ -133,11 +133,11 @@ class ArrayFilter
                 }
             }
         } else {
-            if (!empty($filter['$only']) && $this->isNumericArray($filter['$only']) && $checkConditionals) {
+            if (is_array($filter) && array_key_exists('$only', $filter) && $this->isNumericArray($filter['$only']) && $checkConditionals) {
                 $this->log->debug('Filter is $only', get_defined_vars());
                 $key = array_search($source, $filter['$only']);
                 return !($key === false);
-            } elseif (!empty($filter['$not']) && $this->isNumericArray($filter['$not']) && $checkConditionals) {
+            } elseif (is_array($filter) && array_key_exists('$not', $filter) && $this->isNumericArray($filter['$not']) && $checkConditionals) {
                 $this->log->debug('Filter is $not', get_defined_vars());
                 $key = array_search($source, $filter['$not']);
                 return ($key === false);
