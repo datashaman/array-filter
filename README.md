@@ -7,6 +7,8 @@ Credit to [ Matt McKegg ](https://github.com/mmckegg) for creating an incredibly
 
 Match PHP arrays against filters.
 
+[![Build Status](https://travis-ci.org/datashaman/array-filter.svg?branch=master)](https://travis-ci.org/datashaman/array-filter)
+
 ## Installation
 
 ```shell
