@@ -96,6 +96,7 @@ class ArrayFilter
         if ($this->isObject($source)) {
             if ($this->isObject($filter)) {
                 if (!empty($filter['$any']) && $checkConditionals) {
+                    $this->log->debug('Filter is $any', get_defined_vars());
                     return true;
                 } elseif ($this->isNumericArray($source)) {
                     $this->log->debug('Source is an array', get_defined_vars());
