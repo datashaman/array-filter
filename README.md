@@ -15,7 +15,7 @@ $ composer require datashaman/object-filter
 
 ## Filters
 
-Filters are just object that have the keys and values you want your final object to have. e.g. if you wanted to require that the field `type` was always `person` your filter would be `{type: 'person'}`. 
+Filters are just objects that have the keys and values you want your final object to have. e.g. if you wanted to require that the field `type` was always `person` your filter would be `{type: 'person'}`. 
 
 If things aren't so black and white, the following conditionals are available:
 
