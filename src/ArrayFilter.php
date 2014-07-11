@@ -104,6 +104,8 @@ class ArrayFilter
                 $key = array_search($source, $filter['$not']);
                 return ($key === false);
             } else {
+                var_dump(get_defined_vars());
+
                 return $source === $filter;
             }
         }
