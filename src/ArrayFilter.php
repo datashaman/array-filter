@@ -73,6 +73,7 @@ class ArrayFilter
                 $this->log->debug('Filter is null', get_defined_vars());
                 return true;
             } elseif (!empty($filter['$any']) && $filter['$any'] === true) {
+                $this->log->debug('Filter', $filter);
                 $this->log->debug('First');
                 $this->log->debug('Filter is $any', get_defined_vars());
                 return true;
