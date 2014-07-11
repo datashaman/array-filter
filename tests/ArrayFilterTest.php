@@ -14,310 +14,310 @@ class ArrayFilterTest extends PHPUnit_Framework_TestCase
     public function testIsAssocArray()
     {
         $this->assertTrue($this->filter->isAssocArray(
-            [ 'name' => 'Cats' ]
+            array( 'name' => 'Cats' )
         ));
 
         $this->assertTrue($this->filter->isAssocArray(
-            [ 'cats' => 'Cats', 'dogs' => 'Dogs' ]
+            array( 'cats' => 'Cats', 'dogs' => 'Dogs' )
         ));
 
         $this->assertTrue($this->filter->isAssocArray(
-            [ 0 => 'Cats', 'name' => 'Dogs' ]
+            array( 0 => 'Cats', 'name' => 'Dogs' )
         ));
 
         $this->assertTrue($this->filter->isAssocArray(
-            [ 'name' => 'Dogs', 0 => 'Cats' ]
+            array( 'name' => 'Dogs', 0 => 'Cats' )
         ));
 
         $this->assertFalse($this->filter->isAssocArray(
-            [ 0 => 'Cats' ]
+            array( 0 => 'Cats' )
         ));
 
         $this->assertFalse($this->filter->isAssocArray(
-            [ 0 => 'Cats', 1 => 'Dogs' ]
+            array( 0 => 'Cats', 1 => 'Dogs' )
         ));
     }
 
     public function testBasicTests()
     {
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Cats' ],
-            [ 'name' => 'Cats' ]
+            array( 'name' => 'Cats' ),
+            array( 'name' => 'Cats' )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Dogs' ],
-            [ 'name' => 'Cats' ]
+            array( 'name' => 'Dogs' ),
+            array( 'name' => 'Cats' )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Dogs' ],
-            [ 'name' => [ '$any' => true ] ]
+            array( 'name' => 'Dogs' ),
+            array( 'name' => array( '$any' => true ) )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Dogs' ],
-            [ 'name' => [ '$only' => [ 'Dogs', 'Cats' ] ] ]
+            array( 'name' => 'Dogs' ),
+            array( 'name' => array( '$only' => array( 'Dogs', 'Cats' ) ) )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Chickens' ],
-            [ 'name' => [ '$only' => [ 'Dogs', 'Cats' ] ] ]
+            array( 'name' => 'Chickens' ),
+            array( 'name' => array( '$only' => array( 'Dogs', 'Cats' ) ) )
         ));
     }
 
     public function testPresent()
     {
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Chickens' ],
-            [ 'name' => [ '$present' => true ] ]
+            array( 'name' => 'Chickens' ),
+            array( 'name' => array( '$present' => true ) )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'cat' => 'Meow' ],
-            [ 'name' => [ '$present' => true ] ]
+            array( 'cat' => 'Meow' ),
+            array( 'name' => array( '$present' => true ) )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Chickens' ],
-            [ 'name' => [ '$present' => false ] ]
+            array( 'name' => 'Chickens' ),
+            array( 'name' => array( '$present' => false ) )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'cat' => 'Meow' ],
-            [ 'name' => [ '$present' => false ] ]
+            array( 'cat' => 'Meow' ),
+            array( 'name' => array( '$present' => false ) )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'object' => [ 'name' => 'Chickens' ] ],
-            [ 'object' => [ '$present' => true ] ]
+            array( 'object' => array( 'name' => 'Chickens' ) ),
+            array( 'object' => array( '$present' => true ) )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'object' => [ 'name' => 'Chickens' ] ],
-            [ 'object' => [ '$present' => false ] ]
+            array( 'object' => array( 'name' => 'Chickens' ) ),
+            array( 'object' => array( '$present' => false ) )
         ));
     }
 
     public function testExtraUndefinedAttributes()
     {
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Dogs' ],
-            [
-                'name' => [ '$only' => [ 'Dogs', 'Cats' ] ],
-                'value' => [ '$only' => [ 1, 2, 3, 4 ] ],
-            ]
+            array( 'name' => 'Dogs' ),
+            array(
+                'name' => array( '$only' => array( 'Dogs', 'Cats' ) ),
+                'value' => array( '$only' => array( 1, 2, 3, 4 ) ),
+            )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Dogs' ],
-            [
-                'name' => [ '$only' => [ 'Dogs', 'Cats' ] ],
-                'value' => [ '$only' => [ 1, 2, 3, 4 ] ],
-            ],
-            [ 'match' => 'any' ]
+            array( 'name' => 'Dogs' ),
+            array(
+                'name' => array( '$only' => array( 'Dogs', 'Cats' ) ),
+                'value' => array( '$only' => array( 1, 2, 3, 4 ) ),
+            ),
+            array( 'match' => 'any' )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Dogs', 'value' => 3 ],
-            [
-                'name' => [ '$only' => [ 'Dogs', 'Cats' ] ],
-                'value' => [ '$only' => [ 1, 2, 3, 4 ] ],
-            ]
+            array( 'name' => 'Dogs', 'value' => 3 ),
+            array(
+                'name' => array( '$only' => array( 'Dogs', 'Cats' ) ),
+                'value' => array( '$only' => array( 1, 2, 3, 4 ) ),
+            )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Dogs' ],
-            [
-                'name' => [ '$only' => [ 'Dogs', 'Cats' ] ],
-                'value' => [ '$any' => true ],
-            ]
+            array( 'name' => 'Dogs' ),
+            array(
+                'name' => array( '$only' => array( 'Dogs', 'Cats' ) ),
+                'value' => array( '$any' => true ),
+            )
         ));
     }
 
     public function testSourceMatchOption()
     {
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ],
-            [ 'name' => 'Dog', 'color' => [ '$any' => true ], 'type' => 'animal' ],
-            [ 'match' => 'source' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ),
+            array( 'name' => 'Dog', 'color' => array( '$any' => true ), 'type' => 'animal' ),
+            array( 'match' => 'source' )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'extraAttribute' => 'Stuff' ],
-            [ 'name' => 'Dog', 'color' => [ '$any' => true ], 'type' => 'animal' ],
-            [ 'match' => 'source' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'extraAttribute' => 'Stuff' ),
+            array( 'name' => 'Dog', 'color' => array( '$any' => true ), 'type' => 'animal' ),
+            array( 'match' => 'source' )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'extraAttribute' => 'Stuff' ],
-            [ 'name' => 'Dog', 'color' => [ '$any' => true ], 'type' => 'animal' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'extraAttribute' => 'Stuff' ),
+            array( 'name' => 'Dog', 'color' => array( '$any' => true ), 'type' => 'animal' )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'extraAttribute' => 'Stuff' ],
-            [ 'name' => 'Dog', 'color' => [ '$any' => true ], 'type' => 'animal', 'extraAttribute' => [
-                '$only' => [ 'Stuff', 'Things' ],
-            ]],
-            [ 'match' => 'source' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'extraAttribute' => 'Stuff' ),
+            array( 'name' => 'Dog', 'color' => array( '$any' => true ), 'type' => 'animal', 'extraAttribute' => array(
+                '$only' => array( 'Stuff', 'Things' ),
+            )),
+            array( 'match' => 'source' )
         ));
     }
 
     public function testAllMatchOption()
     {
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ],
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ],
-            [ 'match' => 'all' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ),
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ),
+            array( 'match' => 'all' )
         ), 'Equal match');
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => [ 'deep' => true ] ],
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => [ 'deep' => true ] ],
-            [ 'match' => 'all' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => array( 'deep' => true ) ),
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => array( 'deep' => true ) ),
+            array( 'match' => 'all' )
         ), 'Deep equal match');
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'type' => 'animal' ],
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ],
-            [ 'match' => 'all' ]
+            array( 'name' => 'Dog', 'type' => 'animal' ),
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ),
+            array( 'match' => 'all' )
         ), 'Missing on first');
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ],
-            [ 'name' => 'Dog', 'type' => 'animal' ],
-            [ 'match' => 'all' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ),
+            array( 'name' => 'Dog', 'type' => 'animal' ),
+            array( 'match' => 'all' )
         ), 'Missing on second');
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => [ 'deep' => true ] ],
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => [ 'deep' => false ] ],
-            [ 'match' => 'all' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => array( 'deep' => true ) ),
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => array( 'deep' => false ) ),
+            array( 'match' => 'all' )
         ), 'Deep attribute different');
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ],
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => [ 'deep' => true ] ],
-            [ 'match' => 'all' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ),
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => array( 'deep' => true ) ),
+            array( 'match' => 'all' )
         ), 'No deep on first');
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => [ 'deep' => true ] ],
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ],
-            [ 'match' => 'all' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => array( 'deep' => true ) ),
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ),
+            array( 'match' => 'all' )
         ), 'No deep on second');
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ],
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => [ 'deep' => true, 'another' => 'attribute' ] ],
-            [ 'match' => 'all' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ),
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => array( 'deep' => true, 'another' => 'attribute' ) ),
+            array( 'match' => 'all' )
         ), 'Deep second has another attribute');
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => [ 'deep' => true, 'another' => 'attribute' ] ],
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ],
-            [ 'match' => 'all' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal', 'object' => array( 'deep' => true, 'another' => 'attribute' ) ),
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ),
+            array( 'match' => 'all' )
         ), 'Deep first has another attribute');
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ],
-            [ 'name' => 'Dog', 'color' => 'blue', 'type' => 'animal' ],
-            [ 'match' => 'all' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ),
+            array( 'name' => 'Dog', 'color' => 'blue', 'type' => 'animal' ),
+            array( 'match' => 'all' )
         ), 'Different attribute');
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ],
-            [ 'name' => 'Dog', 'color' => [ '$any' => true ], 'type' => 'animal' ],
-            [ 'match' => 'all' ]
+            array( 'name' => 'Dog', 'color' => 'gray', 'type' => 'animal' ),
+            array( 'name' => 'Dog', 'color' => array( '$any' => true ), 'type' => 'animal' ),
+            array( 'match' => 'all' )
         ), '$conditional');
     }
 
     public function testDeepMatching()
     {
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'data' => [ 'age' => 1, 'gender' => 'male' ] ],
-            [ 'name' => 'Chicken', 'data' => [ 'age' => [ '$only' => [ 1, 2, 3, 4 ] ], 'gender' => 'male' ] ]
+            array( 'name' => 'Chicken', 'data' => array( 'age' => 1, 'gender' => 'male' ) ),
+            array( 'name' => 'Chicken', 'data' => array( 'age' => array( '$only' => array( 1, 2, 3, 4 ) ), 'gender' => 'male' ) )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'data' => [ 'age' => 1, 'gender' => 'female' ] ],
-            [ 'name' => 'Chicken', 'data' => [ 'age' => [ '$only' => [ 1, 2, 3, 4 ] ], 'gender' => 'male' ] ]
+            array( 'name' => 'Chicken', 'data' => array( 'age' => 1, 'gender' => 'female' ) ),
+            array( 'name' => 'Chicken', 'data' => array( 'age' => array( '$only' => array( 1, 2, 3, 4 ) ), 'gender' => 'male' ) )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'data' => [ 'age' => 6, 'gender' => 'male' ] ],
-            [ 'name' => 'Chicken', 'data' => [ 'age' => [ '$only' => [ 1, 2, 3, 4 ] ], 'gender' => 'male' ] ]
+            array( 'name' => 'Chicken', 'data' => array( 'age' => 6, 'gender' => 'male' ) ),
+            array( 'name' => 'Chicken', 'data' => array( 'age' => array( '$only' => array( 1, 2, 3, 4 ) ), 'gender' => 'male' ) )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'data' => [ 'age' => 1, 'gender' => 'female' ] ],
-            [ 'name' => 'Chicken', 'data' => [ 'age' => [ '$only' => [ 1, 2, 3, 4 ] ], 'gender' => [ '$only' => [ 'male', 'female' ] ] ] ]
+            array( 'name' => 'Chicken', 'data' => array( 'age' => 1, 'gender' => 'female' ) ),
+            array( 'name' => 'Chicken', 'data' => array( 'age' => array( '$only' => array( 1, 2, 3, 4 ) ), 'gender' => array( '$only' => array( 'male', 'female' ) ) ) )
         ));
     }
 
     public function testArrayMatching()
     {
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'array' => [ 1, 2, 3, 4, 5 ] ],
-            [ 'name' => 'Chicken', 'array' => [ 1, 2, 3, 4, 5 ] ]
+            array( 'name' => 'Chicken', 'array' => array( 1, 2, 3, 4, 5 ) ),
+            array( 'name' => 'Chicken', 'array' => array( 1, 2, 3, 4, 5 ) )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'array' => [ 1, 2, 3, 4, 5, 6 ] ],
-            [ 'name' => 'Chicken', 'array' => [ 1, 2, 3, 4, 5 ] ]
+            array( 'name' => 'Chicken', 'array' => array( 1, 2, 3, 4, 5, 6 ) ),
+            array( 'name' => 'Chicken', 'array' => array( 1, 2, 3, 4, 5 ) )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'array' => [ 1, 2, 3, 4 ] ],
-            [ 'name' => 'Chicken', 'array' => [ 1, 2, 3, 4, 5 ] ]
+            array( 'name' => 'Chicken', 'array' => array( 1, 2, 3, 4 ) ),
+            array( 'name' => 'Chicken', 'array' => array( 1, 2, 3, 4, 5 ) )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'array' => [ 1, 2, 3, 4 ] ],
-            [ 'name' => 'Chicken', 'array' => [ 1, [ '$only' => [ 2, 3 ] ], 3, 4 ] ]
+            array( 'name' => 'Chicken', 'array' => array( 1, 2, 3, 4 ) ),
+            array( 'name' => 'Chicken', 'array' => array( 1, array( '$only' => array( 2, 3 ) ), 3, 4 ) )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'array' => [ 1, 2, 3, 4 ] ],
-            [ 'name' => 'Chicken', 'array' => [ '$contains' => [ 4, 2 ] ] ]
+            array( 'name' => 'Chicken', 'array' => array( 1, 2, 3, 4 ) ),
+            array( 'name' => 'Chicken', 'array' => array( '$contains' => array( 4, 2 ) ) )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'array' => [ 1, 2, 3, 4 ] ],
-            [ 'name' => 'Chicken', 'array' => [ '$contains' => [ 4, 2, 5 ] ] ]
+            array( 'name' => 'Chicken', 'array' => array( 1, 2, 3, 4 ) ),
+            array( 'name' => 'Chicken', 'array' => array( '$contains' => array( 4, 2, 5 ) ) )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'array' => [ 1, 2, 3, 4 ] ],
-            [ 'name' => 'Chicken', 'array' => [ '$excludes' => [ 4, 2, 5 ] ] ]
+            array( 'name' => 'Chicken', 'array' => array( 1, 2, 3, 4 ) ),
+            array( 'name' => 'Chicken', 'array' => array( '$excludes' => array( 4, 2, 5 ) ) )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'array' => [ 1, 3 ] ],
-            [ 'name' => 'Chicken', 'array' => [ '$excludes' => [ 4, 2, 5 ] ] ]
+            array( 'name' => 'Chicken', 'array' => array( 1, 3 ) ),
+            array( 'name' => 'Chicken', 'array' => array( '$excludes' => array( 4, 2, 5 ) ) )
         ));
     }
 
     public function testCombinations()
     {
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'array' => [ 1, [ 'cat' => 1 ], 3, 4 ] ],
-            [ 'name' => 'Chicken', 'array' => [ 1, [ 'cat' => 1 ], 3, 4 ] ]
+            array( 'name' => 'Chicken', 'array' => array( 1, array( 'cat' => 1 ), 3, 4 ) ),
+            array( 'name' => 'Chicken', 'array' => array( 1, array( 'cat' => 1 ), 3, 4 ) )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'array' => [ 1, [ 'cat' => 2 ], 3, 4 ] ],
-            [ 'name' => 'Chicken', 'array' => [ 1, [ 'cat' => 1 ], 3, 4 ] ]
+            array( 'name' => 'Chicken', 'array' => array( 1, array( 'cat' => 2 ), 3, 4 ) ),
+            array( 'name' => 'Chicken', 'array' => array( 1, array( 'cat' => 1 ), 3, 4 ) )
         ));
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'array' => [ 1, [ 'cat' => 2 ], 3, 4 ] ],
-            [ 'name' => 'Chicken', 'array' => [ 1, [ 'cat' => [ '$only' => [ 1, 2 ] ] ], 3, 4 ] ]
+            array( 'name' => 'Chicken', 'array' => array( 1, array( 'cat' => 2 ), 3, 4 ) ),
+            array( 'name' => 'Chicken', 'array' => array( 1, array( 'cat' => array( '$only' => array( 1, 2 ) ) ), 3, 4 ) )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'name' => 'Chicken', 'array' => [ 1, [ 'cat' => 3 ], 3, 4 ] ],
-            [ 'name' => 'Chicken', 'array' => [ 1, [ 'cat' => [ '$only' => [ 1, 2 ] ] ], 3, 4 ] ]
+            array( 'name' => 'Chicken', 'array' => array( 1, array( 'cat' => 3 ), 3, 4 ) ),
+            array( 'name' => 'Chicken', 'array' => array( 1, array( 'cat' => array( '$only' => array( 1, 2 ) ) ), 3, 4 ) )
         ));
     }
 
@@ -330,15 +330,15 @@ class ArrayFilterTest extends PHPUnit_Framework_TestCase
         };
 
         $this->assertTrue($this->filter->checkFilter(
-            [ 'id' => 1, 'type' => 'comment', 'user_id' => 124 ],
-            [ 'type' => 'comment', 'user_id' => [ '$query' => 'user_id' ] ],
-            [ 'queryHandler' => $queryHandler ]
+            array( 'id' => 1, 'type' => 'comment', 'user_id' => 124 ),
+            array( 'type' => 'comment', 'user_id' => array( '$query' => 'user_id' ) ),
+            array( 'queryHandler' => $queryHandler )
         ));
 
         $this->assertFalse($this->filter->checkFilter(
-            [ 'id' => 1, 'type' => 'comment', 'user_id' => 124123 ],
-            [ 'type' => 'comment', 'user_id' => [ '$query' => 'user_id' ] ],
-            [ 'queryHandler' => $queryHandler ]
+            array( 'id' => 1, 'type' => 'comment', 'user_id' => 124123 ),
+            array( 'type' => 'comment', 'user_id' => array( '$query' => 'user_id' ) ),
+            array( 'queryHandler' => $queryHandler )
         ));
     }
 }
