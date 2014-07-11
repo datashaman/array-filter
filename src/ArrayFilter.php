@@ -77,7 +77,7 @@ class ArrayFilter
                 $this->log->debug('First');
                 $this->log->debug('Filter is $any', get_defined_vars());
                 return true;
-            } elseif (!empty($filter['$query']) && !empty($options['queryHandler'])) {
+            } elseif (is_array($filter) && array_key_exists('$query', $filter) && array_key_exists('queryHandler', $options)) {
                 $queryHandler = $options['queryHandler'];
                 $context = array_key_exists('context', $options) ? $options['context'] : $source;
                 $queryValue = call_user_func($queryHandler, $filter['$query'], $context);
