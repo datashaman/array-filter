@@ -161,15 +161,15 @@ class ArrayFilter
                 $result = $this->matchSpecifiedKeys($keys, $source, $filter, $options);
             } elseif ($options['match'] === 'source') {
                 $keys = array_keys($source);
-                $options = array_merge($options, [
+                $options = array_merge($options, array(
                     'match' => 'filter',
-                ]);
+                ));
                 $result = $this->matchSpecifiedKeysWithOptional($keys, $source, $filter, $options);
             } else {
                 $keys = array_keys($source);
-                $options = array_merge($options, [
+                $options = array_merge($options, array(
                     'match' => 'filter',
-                ]);
+                ));
                 $result = $this->matchSpecifiedKeys($keys, $source, $filter, $options);
             }
         }
