@@ -36,12 +36,12 @@ class ArrayFilter
         return true;
     }
 
-    public function checkFilter($source, $filter, $options=[]) {
+    public function checkFilter($source, $filter, $options=array()) {
         $checkConditionals = empty($options) || @$options['match'] !== 'all';
 
-        $options = array_merge([
+        $options = array_merge(array(
             'match' => 'filter',
-        ], $options);
+        ), $options);
 
         if ($checkConditionals) {
             if ($filter && is_array($filter) && array_key_exists('$present', $filter) && $filter['$present']) {
