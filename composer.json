@@ -1,6 +1,14 @@
 {
     "name": "datashaman/array-filter",
+    "type": "library",
     "description": "Match an array against a filter",
+    "keywords": [
+        "array",
+        "filter",
+        "query",
+        "validation"
+    ],
+    "homepage": "http://github.com/datashaman/array-filter",
     "license": "MIT",
     "authors": [
         {
@@ -17,6 +25,7 @@
         "phpunit/phpunit": "4.*"
     },
     "require": {
+        "php": ">=5.3.0",
         "monolog/monolog": "1.*"
     }
 }
