@@ -1,21 +1,21 @@
-JSON Filter
+Array Filter
 ===
 
 A literal port of the excellent Javascript library [ mmckegg / json-filter ](https://github.com/mmckegg/json-filter) to PHP.
 
 Credit to [ Matt McKegg ](https://github.com/mmckegg) for creating an incredibly useful, well-tested piece of software.
 
-Match PHP objects against filters.
+Match PHP arrays against filters.
 
 ## Installation
 
 ```shell
-$ composer require datashaman/object-filter
+$ composer require datashaman/array-filter
 ```
 
 ## Filters
 
-Filters are just objects that have the keys and values you want your final object to have. e.g. if you wanted to require that the field `type` was always `person` your filter would be `{type: 'person'}`. 
+Filters are just arrays that have the keys and values you want your final array to have. e.g. if you wanted to require that the field `type` was always `person` your filter would be `{type: 'person'}`. 
 
 If things aren't so black and white, the following conditionals are available:
 
@@ -130,9 +130,9 @@ Is equivalent to:
 ## API
 
 ```php
-use DataShaman\ObjectFilter;
+use DataShaman\ArrayFilter;
 
-$filter = new ObjectFilter;
+$filter = new ArrayFilter;
 $filter->checkFilter($source, $filter, $options);
 ```
 
@@ -146,4 +146,4 @@ $filter->checkFilter($source, $filter, $options);
   - any: the keys don't matter, but if there is a match, they must pass
   - all: all keys must be exactly the same, otherwise fails - for finding changed items - no $conditionals work in this mode
 - **queryHandler**: Accepts a function(query, localContext) that returns resulting value
-- **context**: Object to pass to the query handler
+- **context**: Array to pass to the query handler

@@ -1,14 +1,14 @@
 <?php
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-use DataShaman\ObjectFilter;
+use DataShaman\ArrayFilter;
 
 
-class ObjectFilterTest extends PHPUnit_Framework_TestCase
+class ArrayFilterTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->filter = new ObjectFilter();
+        $this->filter = new ArrayFilter();
     }
 
     public function testIsAssocArray()

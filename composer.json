@@ -1,6 +1,6 @@
 {
-    "name": "datashaman/object-filter",
-    "description": "Match an object against a filter",
+    "name": "datashaman/array-filter",
+    "description": "Match an array against a filter",
     "license": "MIT",
     "authors": [
         {
