@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Monolog\Logger;
+use Monolog\Handler\TestHandler;
+
 use DataShaman\ArrayFilter;
 
 
@@ -8,7 +11,10 @@ class ArrayFilterTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->filter = new ArrayFilter();
+        $log = new Logger('array-filter-test');
+        $log->pushHandler(new TestHandler);
+
+        $this->filter = new ArrayFilter($log);
     }
 
     public function testIsAssocArray()
@@ -324,8 +330,6 @@ class ArrayFilterTest extends PHPUnit_Framework_TestCase
     public function testFilterQueries()
     {
         $queryHandler = function($query, $object) {
-            var_dump(get_defined_vars());
-
             if ($query === 'user_id') {
                 return 124;
             }
