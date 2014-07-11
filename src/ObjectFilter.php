@@ -1,6 +1,6 @@
-<?php
+<?php namespace DataShaman;
 
-class Filter
+class ObjectFilter
 {
     public function isAssocArray($thing) {
         if (is_array($thing)) {

@@ -10,7 +10,7 @@ Match PHP objects against filters.
 ## Installation
 
 ```shell
-$ composer require datashaman/json-filter
+$ composer require datashaman/object-filter
 ```
 
 ## Filters
@@ -117,7 +117,7 @@ A shortcut for specifying a lot of $any filters at the same time.
 ]
 ```
 
-Is equivelent to:
+Is equivalent to:
 
 ```php
 [
@@ -130,9 +130,9 @@ Is equivelent to:
 ## API
 
 ```php
-use DataShaman\JsonFilter;
+use DataShaman\ObjectFilter;
 
-$filter = new JsonFilter;
+$filter = new ObjectFilter;
 $filter->checkFilter($source, $filter, $options);
 ```
 
