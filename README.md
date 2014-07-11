@@ -24,9 +24,9 @@ If things aren't so black and white, the following conditionals are available:
 Specify that the value must not be null or false (i.e. 'truthy'). 
 
 ```php
-[
-  'name' => [ '$present' => true ]
-]
+array(
+  'name' => array( '$present' => true )
+)
 ```
 
 #### $any
@@ -34,9 +34,9 @@ Specify that the value must not be null or false (i.e. 'truthy').
 Specify that the value can be anything. Useful when matching all keys.
 
 ```php
-[
-  'description' => [ '$any' => true ]
-]
+array(
+  'description' => array( '$any' => true )
+)
 ```
 
 #### $contains
@@ -44,9 +44,9 @@ Specify that the value can be anything. Useful when matching all keys.
 For matching against an array. The array must contain all of the values specified.
 
 ```php
-[
-  'tags' => [ '$contains' => [ 'cat', 'animal' ] ]
-]
+array(
+  'tags' => array( '$contains' => array( 'cat', 'animal' ) )
+)
 ```
 
 #### $excludes
@@ -54,9 +54,9 @@ For matching against an array. The array must contain all of the values specifie
 For matching against an array. The array cannot contain any of the values specified.
 
 ```php
-[
-  'permissions' => [ '$excludes' => [ 'admin', 'mod' ] ]
-]
+array(
+  'permissions' => array( '$excludes' => array( 'admin', 'mod' ) )
+)
 ```
 
 #### $only
@@ -64,9 +64,9 @@ For matching against an array. The array cannot contain any of the values specif
 The value can only be one of the ones specified.
 
 ```php
-[
-  'gender' => [ '$only' => [ 'male', 'female', 'unknown'] ]
-]
+array(
+  'gender' => array( '$only' => array( 'male', 'female', 'unknown' ) )
+)
 ```
 
 #### $not
@@ -74,9 +74,9 @@ The value can only be one of the ones specified.
 The value can be anything except one of the ones specified.
 
 ```php
-[
-  'browser' => [ '$not' => [ 'IE', 'Firefox' ] ]
-]
+array(
+  'browser' => array( '$not' => array( 'IE', 'Firefox' ) )
+)
 ```
 
 #### $matchAny
@@ -84,16 +84,16 @@ The value can be anything except one of the ones specified.
 Allows a filter to branch into multiple filters when at least one must match.
 
 ```php
-[
-  '$matchAny' => [
-    [ 'type' => "Post",
-      'state' => [ '$only' => [ 'draft', 'published' ] ]
-    ],
-    [ 'type' => "Comment",
-      'state' => [ '$only' => [ 'pending', 'approved', 'spam' ] ]
-    ]
-  ]
-]
+array(
+  '$matchAny' => array(
+    array( 'type' => "Post",
+      'state' => array( '$only' => array( 'draft', 'published' ) )
+    ),
+    array( 'type' => "Comment",
+      'state' => array( '$only' => array( 'pending', 'approved', 'spam' ) )
+    )
+  )
+)
 ```
 
 #### $query
@@ -101,10 +101,10 @@ Allows a filter to branch into multiple filters when at least one must match.
 Specify a query to get the value to match. Uses `options.queryHandler`.
 
 ```php
-[
+array(
   'type' => 'item',
-  'user_id' => [ '$query' => 'user.id' ]
-]
+  'user_id' => array( '$query' => 'user.id' )
+)
 ```
 
 #### $optional
@@ -112,19 +112,19 @@ Specify a query to get the value to match. Uses `options.queryHandler`.
 A shortcut for specifying a lot of $any filters at the same time.
 
 ```php
-[
-  '$optional' => [ 'description', 'color', 'age' ]
-]
+array(
+  '$optional' => array( 'description', 'color', 'age' )
+)
 ```
 
 Is equivalent to:
 
 ```php
-[
-  'description' => [ '$any' => true ],
-  'color' => [ '$any' => true ],
-  'age' => [ '$any' => true ]
-]
+array(
+  'description' => array( '$any' => true ),
+  'color' => array( '$any' => true ),
+  'age' => array( '$any' => true )
+)
 ```
 
 ## API
