@@ -5,13 +5,14 @@ use Monolog\Handler\StreamHandler;
 
 class ArrayFilter
 {
+    public $logging = false;
     private $log;
 
     public function __construct($log=null)
     {
         if (is_null($log)) {
             $log = new Logger('datashaman.array-filter');
-            $log->pushHandler(new StreamHandler('php://stdout'), Logger::WARNING);
+            // $log->pushHandler(new StreamHandler('php://stdout'), Logger::WARNING);
         }
 
         $this->log = $log;
