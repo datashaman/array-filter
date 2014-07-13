@@ -11,7 +11,7 @@ class ArrayFilter
     {
         if (is_null($log)) {
             $log = new Logger('datashaman.array-filter');
-            $log->pushHandler(new StreamHandler('php://stdout'), Logger::DEBUG);
+            $log->pushHandler(new StreamHandler('php://stdout'), Logger::WARN);
         }
 
         $this->log = $log;
