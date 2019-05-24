@@ -7,9 +7,9 @@ use Monolog\Handler\TestHandler;
 use DataShaman\ArrayFilter;
 
 
-class ArrayFilterTest extends PHPUnit_Framework_TestCase
+class ArrayFilterTest extends PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $log = new Logger('array-filter-test');
         $log->pushHandler(new TestHandler);
